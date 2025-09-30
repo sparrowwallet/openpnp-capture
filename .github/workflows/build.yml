@@ -1,18 +1,18 @@
-on: 
-  push:
-  pull_request:
+name: Build
+
+on: workflow_dispatch
 
 jobs:
   macos_x86_64:
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-13]
         arch: [x86_64]
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Build
         run: |
@@ -28,31 +28,19 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
-          name: ${{ matrix.os }}-${{ matrix.arch }}
           path: |
             deploy/*
             
-      - name: Create Release
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        uses: ncipollo/release-action@v1
-        with:
-            artifacts: "deploy/*"
-            token: ${{ secrets.GITHUB_TOKEN }}
-            allowUpdates: true
-
   macos_arm64: 
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [macos-14]
         arch: [arm64]
 
-    # Currently runs on Jason's Mac using a Github self hosted runner because
-    # Github doesn't yet support runners for Apple Silicon on macOS. 
     runs-on: ${{ matrix.os }}
-    # runs-on: [self-hosted, macOS, ARM64]
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Build
         run: |
@@ -68,28 +56,19 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
-          name: ${{ matrix.os }}-${{ matrix.arch }}
           path: |
             deploy/*
             
-      - name: Create Release
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        uses: ncipollo/release-action@v1
-        with:
-            artifacts: "deploy/*"
-            token: ${{ secrets.GITHUB_TOKEN }}
-            allowUpdates: true
-
   windows_x86_64: 
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-2022]
         arch: [x86_64]
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: Visual Studio shell
         uses: egor-tensin/vs-shell@v2
@@ -108,28 +87,19 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
-          name: ${{ matrix.os }}-${{ matrix.arch }}
           path: |
             deploy/*
             
-      - name: Create Release
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        uses: ncipollo/release-action@v1
-        with:
-            artifacts: "deploy/*"
-            token: ${{ secrets.GITHUB_TOKEN }}
-            allowUpdates: true
-
   linux_arm64: 
     strategy:
       matrix:
-        os: [ubuntu-22.04]
+        os: [ubuntu-22.04-arm]
         arch: [arm64]
 
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: "Build"
         run: |
@@ -146,17 +116,8 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
-          name: ${{ matrix.os }}-${{ matrix.arch }}
           path: |
             deploy/*
-
-      - name: Create Release
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        uses: ncipollo/release-action@v1
-        with:
-            artifacts: "deploy/*"
-            token: ${{ secrets.GITHUB_TOKEN }}
-            allowUpdates: true
 
   linux_x86_64: 
     strategy:
@@ -167,7 +128,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
 
       - name: "Build"
         run: |
@@ -184,14 +145,6 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
-          name: ${{ matrix.os }}-${{ matrix.arch }}
           path: |
             deploy/*
 
-      - name: Create Release
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-        uses: ncipollo/release-action@v1
-        with:
-            artifacts: "deploy/*"
-            token: ${{ secrets.GITHUB_TOKEN }}
-            allowUpdates: true
