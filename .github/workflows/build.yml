@@ -28,6 +28,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
+          name: openpnp-capture - ${{ runner.os }} ${{ runner.arch }}
           path: |
             deploy/*
             
@@ -56,6 +57,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
+          name: openpnp-capture - ${{ runner.os }} ${{ runner.arch }}
           path: |
             deploy/*
             
@@ -87,6 +89,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
+          name: openpnp-capture - ${{ runner.os }} ${{ runner.arch }}
           path: |
             deploy/*
             
@@ -116,6 +119,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
+          name: openpnp-capture - ${{ runner.os }} ${{ runner.arch }}
           path: |
             deploy/*
 
@@ -145,6 +149,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with: 
+          name: openpnp-capture - ${{ runner.os }} ${{ runner.arch }}
           path: |
             deploy/*
 
