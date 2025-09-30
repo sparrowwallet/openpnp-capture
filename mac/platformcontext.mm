@@ -88,7 +88,7 @@ bool PlatformContext::enumerateDevices()
     LOG(LOG_DEBUG, "enumerateDevices called\n");
 
     m_devices.clear();
-    AVCaptureDeviceDiscoverySession *captureDeviceDiscoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera,AVCaptureDeviceTypeExternalUnknown]
+    AVCaptureDeviceDiscoverySession *captureDeviceDiscoverySession = [AVCaptureDeviceDiscoverySession discoverySessionWithDeviceTypes:@[AVCaptureDeviceTypeBuiltInWideAngleCamera,AVCaptureDeviceTypeContinuityCamera,AVCaptureDeviceTypeExternal]
                                           mediaType:AVMediaTypeVideo
                                            position:AVCaptureDevicePositionUnspecified];
     for (AVCaptureDevice* device in [captureDeviceDiscoverySession devices])
