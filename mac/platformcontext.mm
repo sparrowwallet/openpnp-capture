@@ -93,9 +93,8 @@ bool PlatformContext::enumerateDevices()
     [deviceTypes addObject:AVCaptureDeviceTypeBuiltInWideAngleCamera];
     
     if (@available(macOS 14.0, *)) {
-        [deviceTypes addObject:AVCaptureDeviceTypeExternal];
         [deviceTypes addObject:AVCaptureDeviceTypeContinuityCamera];
-        [deviceTypes addObject:AVCaptureDeviceTypeDeskViewCamera];
+        [deviceTypes addObject:AVCaptureDeviceTypeExternal];
     } else {
         [deviceTypes addObject:AVCaptureDeviceTypeExternalUnknown];
     }
