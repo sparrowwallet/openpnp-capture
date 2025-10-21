@@ -44,7 +44,7 @@ Documentation for openpnp-capture needs improvement. We would love your [help!](
 
 # Building OpenPnP Capture
 ## Dependencies
-* CMAKE 3.1 or better
+* CMAKE 3.16 or better
 * MAKE (osx, linux)
 * Visual Studio 2013 + NMake or Ninja Build (windows)
 * NASM for building libjpeg-turbo (linux)
