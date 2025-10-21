@@ -12,7 +12,7 @@
 
 cmake_minimum_required(VERSION 3.16)
 project (openpnp-capture)
-set(OPENPNP_CAPTURE_LIB_VERSION "0.0.28" CACHE STRING "openpnp-capture library version")
+set(OPENPNP_CAPTURE_LIB_VERSION "0.0.30" CACHE STRING "openpnp-capture library version")
 set(OPENPNP_CAPTURE_LIB_SOVERSION "0" CACHE STRING "openpnp-capture library soversion")
 
 # Library type options
