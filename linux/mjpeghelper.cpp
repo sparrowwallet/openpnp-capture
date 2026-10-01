@@ -40,10 +40,18 @@ bool MJPEGHelper::decompressFrame(const uint8_t *inBuffer,
     // so, for now, we'll cast it to a non-const pointer.
     // Yes, that is completely dirty... I'm not happy with it either.
 
+    if (m_decompressHandle == nullptr)
+    {
+        return false;
+    }
+
     uint8_t *jpegPtr = const_cast<uint8_t*>(inBuffer);
-    int32_t width, height, jpegSubsamp;
-    
-    tjDecompressHeader2(m_decompressHandle, jpegPtr, inBytes, &width, &height, &jpegSubsamp);    
+    int32_t width = 0, height = 0, jpegSubsamp = 0;
+
+    // note: the return value is not checked, as it also reports warnings
+    // and unknown subsampling for headers that are still decodable.
+    // A header that could not be read fails the size check instead.
+    tjDecompressHeader2(m_decompressHandle, jpegPtr, inBytes, &width, &height, &jpegSubsamp);
     if ((width != outBufWidth) || (height != outBufHeight))
     {
         LOG(LOG_ERR, "tjDecompressHeader2 failed: %s\n", tjGetErrorStr());

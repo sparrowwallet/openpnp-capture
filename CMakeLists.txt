@@ -203,6 +203,11 @@ ELSEIF(UNIX)
         add_dependencies(turbojpeg-static libjpeg-turbo-external)
 
         target_link_libraries(openpnp-capture PRIVATE turbojpeg-static)
+
+        # do not export the symbols of the static libjpeg-turbo, otherwise
+        # a different libjpeg already loaded by the host process (for example
+        # via GTK) is bound to instead, and the decompressor fails to initialize
+        target_link_options(openpnp-capture PRIVATE "-Wl,--exclude-libs,ALL")
     endif()
 
     # add linux-specific test application

@@ -471,6 +471,15 @@ bool PlatformStream::open(Context *owner, deviceInfo *device, uint32_t width, ui
     LOG(LOG_INFO, "FOURCC = %s\n", fourCCToString(m_fmt.fmt.pix.pixelformat).c_str());
     LOG(LOG_INFO, "FPS    = %d\n", fps);
 
+    // MJPG frames cannot be decoded without a decompressor,
+    // so fail here rather than deliver no frames at all.
+    if ((m_fmt.fmt.pix.pixelformat == V4L2_PIX_FMT_MJPEG) && !m_mjpegHelper.isValid())
+    {
+        LOG(LOG_CRIT, "Could not create the JPEG decompressor (%s)\n", m_mjpegHelper.getInitError().c_str());
+        close();
+        return false;
+    }
+
     // set the desired frame rate
     v4l2_streamparm sparam;
     CLEAR(sparam);

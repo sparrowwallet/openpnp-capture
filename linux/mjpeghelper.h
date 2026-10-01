@@ -33,6 +33,7 @@
 #include <turbojpeg.h>
 #include <stdint.h>
 #include <stdlib.h> // size_t
+#include <string>
 
 class MJPEGHelper
 {
@@ -40,11 +41,32 @@ public:
     MJPEGHelper()
     {
         m_decompressHandle = tjInitDecompress();
+        if (m_decompressHandle == nullptr)
+        {
+            // keep the reason, the error string is overwritten by later calls
+            m_initError = tjGetErrorStr();
+        }
     }
 
     virtual ~MJPEGHelper()
     {
-        tjDestroy(m_decompressHandle);
+        if (m_decompressHandle != nullptr)
+        {
+            tjDestroy(m_decompressHandle);
+        }
+    }
+
+    /** Returns true if the decompressor was created successfully.
+        If it was not, no frames can be decompressed. */
+    bool isValid() const
+    {
+        return m_decompressHandle != nullptr;
+    }
+
+    /** Returns the reason the decompressor could not be created. */
+    const std::string& getInitError() const
+    {
+        return m_initError;
     }
 
     /** Decompress a JPEG contained in the buffer. 
@@ -57,6 +79,7 @@ public:
 
 protected:
     tjhandle m_decompressHandle;  ///< decompressor handle
+    std::string m_initError;      ///< reason the decompressor could not be created
 };
 
 #endif
